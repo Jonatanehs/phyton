@@ -13,12 +13,16 @@ print("Tendras la oportunidad de obtener 2 pistas en cada nivel", "\nPor cada pr
 print("\n¡Comencemos!")
 
 puntaje =nivel1()
-if puntaje>=3:
+if puntaje>30:
+    print("¡Felicidades, puedes pasar al siguiente nivel!")
     puntaje =nivel2()
-    if puntaje >=3:
+    if puntaje > 30:
+        print("¡Felicidades, puedes pasar al siguiente nivel!")
         puntaje =nivel3()
-        if puntaje >=3:
+        if puntaje >30:
+            print("¡Felicidades, puedes pasar al siguiente nivel!")
             puntaje =nivel4()
-            if puntaje >=3:
+            if puntaje > 30:
+                print("¡Felicidades, puedes pasar al siguiente nivel!")
                 puntaje =nivel5()
                 
