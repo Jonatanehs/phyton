@@ -64,14 +64,19 @@ def reiniciar_juego(nivel):
             print("Dinero: ", total_dinero)
             if nivel == 1:
                 nivel1()
+                break
             elif nivel == 2:
                 nivel2()
+                break
             elif nivel == 3:
                 nivel3()
+                break
             elif nivel == 4:
                 nivel4()
+                break
             elif nivel == 5:
                 nivel5()
+                break
             print("Juego reiniciado")
         else:
             print("Juego terminado")
@@ -80,41 +85,37 @@ def reiniciar_juego(nivel):
 def obtener_pistas(nivel,numero_pistas):
     global contador, pistas, respuestas_correctas, puntaje, respuestas_incorrectas_pista
     lista_nivel = dicc_preguntas[f'lista_nivel{nivel}']
-    resp = numero_pistas
-    for resp in lista_nivel:
-        
-        respuesta = resp['respuesta']
-        resp_pista = input("¿Desea obtener una pista?. Escriba 'S' para obtener la pista: ").lower()
-        if resp_pista == "s":
-            if pistas > 0:
-                pistas -= 1
-                pista_actual = lista_pistas[nivel - 1][numero_pistas]
-                print(pista_actual)
-                guardada = input("Ingrese su respuesta ").upper()
+    lista_nivel = lista_nivel[numero_pistas]
+    respuesta = lista_nivel['respuesta']
+    resp_pista = input("¿Desea obtener una pista?. Escriba 'S' para obtener la pista: ").lower()
+    if resp_pista == "s":
+        if pistas > 0:
+            pistas -= 1
+            pista_actual = lista_pistas[nivel - 1][numero_pistas]
+            print(pista_actual)
+            guardada = input("Ingrese su respuesta ").upper()
+            
+            if guardada == respuesta:
+                respuestas_correctas += 1
+                puntaje += 5
+                print("Respuesta correcta")
+                print("Puntaje: ", puntaje)
                 
-                if guardada == respuesta:
-                    respuestas_correctas += 1
-                    puntaje += 5
-                    print("Respuesta correcta")
-                    print("Puntaje: ", puntaje)
-                    break
-                else:
-                    respuestas_incorrectas_pista += 1
-                    puntaje -= 5
-                    print("Respuesta incorrecta")
-                    print("Puntaje: ", puntaje)
-                    break
-            elif pistas == 0:
-                if dinero >= 500:
-                    reiniciar_juego(nivel)
-                else:
-                    print("No tiene dinero suficiente para reiniciar el nivel.")
-                    print("Juego terminado")
-                    break
-        else:
-            break
-        
-        contador += 1
+            else:
+                respuestas_incorrectas_pista += 1
+                puntaje -= 5
+                print("Respuesta incorrecta")
+                print("Puntaje: ", puntaje)
+                
+        elif pistas == 0:
+            if dinero >= 500:
+                reiniciar_juego(nivel)
+            else:
+                print("No tiene dinero suficiente para reiniciar el nivel.")
+                print("Juego terminado")
+                
+    
+    contador += 1
         
 lista_nivel1= dicc_preguntas['lista_nivel1']
 
@@ -152,11 +153,13 @@ def nivel1():
             if pistas > 0:
                 obtener_pistas(1,numero_pista)
         numero_pista +=1
-    if respuestas_incorrectas >= 3 and respuestas_incorrectas_pista > 2 and dinero >= 500:
+    if puntaje <=30 and dinero >= 500:
         reiniciar_juego(1)
     if respuestas_correctas >= 3:
-        print("\n¡Felicidades, puedes pasar al siguiente nivel!")
-        
+        print()
+    else:
+        print("\nFin del juego")  
+    
     return puntaje
 
 lista_nivel2 = dicc_preguntas['lista_nivel2']
@@ -195,10 +198,10 @@ def nivel2():
             if pistas > 0:
                 obtener_pistas(2,numero_pista)
         numero_pista +=1
-    if respuestas_incorrectas >= 3 and respuestas_incorrectas_pista > 2 and dinero >= 500:
-        reiniciar_juego(1)
-    if respuestas_correctas >= 3:
-        print("\n¡Felicidades, puedes pasar al siguiente nivel!")
+    if puntaje<=30 and dinero >= 500:
+        reiniciar_juego(2)
+    if puntaje > 30:
+        print()
     return puntaje
             
 lista_nivel3= dicc_preguntas['lista_nivel3']
@@ -210,7 +213,7 @@ def nivel3():
     respuestas_incorrectas = 0
     respuestas_incorrectas_pista = 0
     numero_pista = 0
-    for h in lista_nivel1:
+    for h in lista_nivel3:
         pregunta = h['Pregunta']
         opciones = h['Opciones: ']
         respuesta = h['respuesta']
@@ -237,10 +240,10 @@ def nivel3():
             if pistas > 0:
                 obtener_pistas(3,numero_pista)
         numero_pista +=1
-    if respuestas_incorrectas >= 3 and respuestas_incorrectas_pista > 2 and dinero >= 500:
-        reiniciar_juego(1)
-    if respuestas_correctas >= 3:
-        print("\n¡Felicidades, puedes pasar al siguiente nivel!")
+    if puntaje <=30 and dinero >= 500:
+        reiniciar_juego(3)
+    if puntaje > 30:
+        print()
     return puntaje
 
 lista_nivel4 = dicc_preguntas['lista_nivel4']
@@ -252,7 +255,7 @@ def nivel4():
     respuestas_incorrectas = 0
     respuestas_incorrectas_pista = 0
     numero_pista = 0
-    for elemento in lista_nivel2:
+    for elemento in lista_nivel4:
         print()
         pregunta = elemento['pregunta']
         respuesta_correcta = elemento['respuesta']
@@ -279,10 +282,10 @@ def nivel4():
             if pistas > 0:
                 obtener_pistas(4,numero_pista)
         numero_pista +=1
-    if respuestas_incorrectas >= 3 and respuestas_incorrectas_pista > 2 and dinero >= 500:
-        reiniciar_juego(1)
-    if respuestas_correctas >= 3:
-        print("\n¡Felicidades, puedes pasar al siguiente nivel!")
+    if puntaje<= 30 and dinero >= 500:
+        reiniciar_juego(4)
+    if puntaje >  30:
+        print()
     return puntaje
 
 lista_nivel5 = dicc_preguntas['lista_nivel5']
@@ -294,7 +297,7 @@ def nivel5():
     respuestas_incorrectas = 0
     respuestas_incorrectas_pista = 0
     numero_pista = 0
-    for elemento in lista_nivel2:
+    for elemento in lista_nivel5:
         print()
         pregunta = elemento['pregunta']
         respuesta_correcta = elemento['respuesta']
@@ -321,8 +324,8 @@ def nivel5():
             if pistas > 0:
                 obtener_pistas(5,numero_pista)
         numero_pista +=1
-    if respuestas_incorrectas >= 3 and respuestas_incorrectas_pista > 2 and dinero >= 500:
-        reiniciar_juego(1)
-    if respuestas_correctas >= 3:
-        print("\n¡Felicidades, puedes pasar al siguiente nivel!")
+    if puntaje <=30 and dinero >= 500:
+        reiniciar_juego(5)
+    if puntaje > 30:
+        print()
     return puntaje
